@@ -1,24 +1,57 @@
-import React from 'react';
+import {useNavigation} from '@react-navigation/core';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Image, View, Text, StatusBar} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
+import {getMyStringValue, setStringValue} from '../../Global/AsyncStorage';
 import {commonStyle} from '../../Shared/commoStyle/CommonStyle';
 import fontValue from '../../Shared/commoStyle/FontValue';
 
 const OnBoardingScreen = () => {
+  const navigation = useNavigation();
+  const onBoardingDone = async () => {
+    try {
+      await setStringValue('onboarding', 'true');
+      await navigation.navigate('LoginScreen');
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const stringValue = await getMyStringValue('onboarding');
+      if (stringValue === 'true') {
+        navigation.navigate('LoginScreen');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   return (
-    <View style={styles.main}>
+    <View>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <Onboarding
-        pages={Array}
-        onSkip={() => console.warn('Skip buuton working well')}
-        onDone={() => console.warn('Done Button Woring well')}
-        titleStyles={
-          commonStyle({fontSize: 25, fontFamily: fontValue.PoppinsMediumItalic}).text
-        }
-        subTitleStyles ={
-          commonStyle({fontSize: 16, fontFamily: fontValue.PoppinsRegular}).text
-        }
-      />
+      <View style={styles.main}>
+        <Onboarding
+          pages={Array}
+          onSkip={() => onBoardingDone()}
+          onDone={() => onBoardingDone()}
+          titleStyles={
+            commonStyle({
+              fontSize: 25,
+              fontFamily: fontValue.PoppinsMediumItalic,
+            }).text
+          }
+          subTitleStyles={
+            commonStyle({fontSize: 16, fontFamily: fontValue.PoppinsRegular})
+              .text
+          }
+        />
+      </View>
     </View>
   );
 };

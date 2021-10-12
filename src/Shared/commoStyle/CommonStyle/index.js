@@ -13,6 +13,7 @@ export const commonStyle = (obj) => {
         text: {
           fontSize: fontSize,
           fontFamily: fontFamily,
+          color:color
         },
     
         color: {
