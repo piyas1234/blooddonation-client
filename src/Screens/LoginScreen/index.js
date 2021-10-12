@@ -31,6 +31,7 @@ const LoginScreen = ({navigation}) => {
           />
 
           <Button
+          onPress={()=>navigation.navigate("BottomNavigation")}
             buttonStyle={{backgroundColor: colorValue.primary}}
             title="LOG IN"
           />

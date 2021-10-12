@@ -26,8 +26,10 @@ const StackNavigation = () => {
          name="SignUpScreen" 
          component={SignUpScreen} />
          <Stack.Screen 
+         options={{headerMode:false}}
          name="BottomNavigation" 
          component={BottomNavigation} />
+         
          <Stack.Screen 
          name="DrawerNavigation" 
          component={DrawerNavigation} />
